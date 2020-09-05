@@ -12,12 +12,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer(required=True)
-    
-    
+    full_name = serializers.SerializerMethodField()
+
+    def get_full_name(self,obj):
+        try:
+            return obj.first_name + '' + obj.last_name  
+        except:
+            None
 
     class Meta:
         model = User
-        fields = ('url', 'email', 'first_name', 'last_name', 'password', 'profile')
+        fields = ('url', 'email', 'full_name', 'password', 'profile')
         extra_kwargs = {'password': {'write_only': True}}
     
     def create(self,validated_date):
@@ -37,13 +42,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.save()
 
-        profile.title = profile_data.get('title', profile.title)
-        profile.dob = profile_data.get('dob', profile.dob)
+        profile.phone = profile_data.get('phone', profile.phone)
         profile.address = profile_data.get('address', profile.address)
         profile.country = profile_data.get('country', profile.country)
         profile.city = profile_data.get('city', profile.city)
-        profile.zip = profile_data.get('zip', profile.zip)
-        profile.photo = profile_data.get('photo', profile.photo)
+        profile.pincode = profile_data.get('pincode', profile.pincode)
         profile.save()
 
         return instance
