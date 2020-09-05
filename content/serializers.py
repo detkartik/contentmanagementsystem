@@ -8,7 +8,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfile
-        fields = ('ext_id','phone','address','city','state','country','pincode')
+        fields = ('phone','address','city','state','country','pincode')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     profile = UserProfileSerializer(required=True)

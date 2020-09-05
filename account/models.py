@@ -24,8 +24,7 @@ class UserProfile(models.Model):
     state = models.CharField(max_length=50,null=True, blank=True)
     country = models.CharField(max_length=50,null=True, blank=True)
     pincode = models.CharField(max_length=6, validators=[RegexValidator(r'^\d{1,10}$')],null=True, blank=True)
-    ext_id = models.CharField(max_length=settings.EXT_ID_LENGTH, blank=True)
-
+    
     REQUIRED_FIELDS = ['phone', 'pincode']
 
     def __unicode__(self):
@@ -34,14 +33,6 @@ class UserProfile(models.Model):
     def get_full_name(self):
         return ' '.join([self.user.first_name, self.user.last_name])
 
-    def check_unique(self, ext_id):
-        return not UserProfile.objects.filter(ext_id=ext_id).exists()
-
-    def save(self, *args, **kwargs):
-        if not self.ext_id:
-            self.ext_id = generate.generate_unique_ext(
-                self, settings.EXT_ID_LENGTH)
-        super(UserProfile, self).save(*args, **kwargs)
 
     
 
