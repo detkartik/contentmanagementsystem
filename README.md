@@ -10,12 +10,11 @@ Assignment project using Django &amp; DRF
   ```
 - Install postgres
   ```sh
-  brew install postgres
   brew install postgresql
   ```
 - Start postgres
   ```sh
-  brew service start postgres
+  brew services start postgres
   ```
 - Create db
   ```sh
