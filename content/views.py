@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import generics, filters, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
@@ -14,6 +14,11 @@ class UserViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = User.objects.all().order_by('id')
     serializer_class = UserSerializer
+
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    search_fields = ('name', 'user__username', 'user__email')
+    ordering_fields = '__all__'
+    ordering = ('-id',)
     
     def get_permissions(self):
         permission_classes = []
@@ -29,14 +34,14 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class ContentViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,IsAdminUser,IsLoggedInUserOrAdmin)
     queryset = Content.objects.all()
     serializer_class = ContentSerializer
     
 
 class CategoryViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,IsAdminUser,IsLoggedInUserOrAdmin)
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     

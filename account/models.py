@@ -9,9 +9,9 @@ from django.core.validators import MaxValueValidator,MinValueValidator,MaxLength
 class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     is_admin = models.BooleanField(default=False)
-
-
-    REQUIRED_FIELDS = ['email','first_name', 'last_name']
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username','first_name', 'last_name']
 
     def __str__(self):
         return "{}".format(self.email)
