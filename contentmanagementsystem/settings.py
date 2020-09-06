@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'rest_auth',
     'content',
     'account',
+    'rest_auth.registration',
 ]
 AUTH_USER_MODEL = 'account.User'
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -96,6 +98,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.AllowAny',
         ),
+        'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
     #     'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     #     'rest_framework.authentication.SessionAuthentication', 
