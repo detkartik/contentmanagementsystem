@@ -1,6 +1,6 @@
-# contentmanagementsystem
+# Content Management System
 
-Content Management System using Django &amp; DRF
+Assignment project using Django &amp; DRF
 
 ### Project Setup for Mac
 
