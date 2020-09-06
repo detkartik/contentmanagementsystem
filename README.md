@@ -1,6 +1,6 @@
-# contentmanagementsystem
+# Content Management System
 
-Content Management System using Django &amp; DRF
+Assignment project using Django &amp; DRF
 
 ### Project Setup for Mac
 
@@ -10,12 +10,11 @@ Content Management System using Django &amp; DRF
   ```
 - Install postgres
   ```sh
-  brew install postgres
   brew install postgresql
   ```
 - Start postgres
   ```sh
-  brew service start postgres
+  brew services start postgres
   ```
 - Create db
   ```sh
