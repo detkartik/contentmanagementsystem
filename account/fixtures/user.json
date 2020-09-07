@@ -1,0 +1,10 @@
+[
+	{
+		"model": "account.User",
+		"pk": 1,
+		"fields": {
+			"first_names": "John",
+			"last_names": "Johnson"
+		}
+	}
+]
