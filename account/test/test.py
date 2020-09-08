@@ -11,3 +11,4 @@ def setUp(self):
         self.user_profile.save()
         self.admin = AdminFactory.build()
         self.admin.save()
+

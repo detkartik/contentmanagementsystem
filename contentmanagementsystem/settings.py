@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'account',
     'rest_auth.registration',
 ]
-AUTH_USER_MODEL = 'account.User'
+
 SITE_ID = 1
 
 MIDDLEWARE = [

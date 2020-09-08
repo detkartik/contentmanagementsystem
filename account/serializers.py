@@ -1,20 +1,21 @@
 from rest_framework import serializers
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from rest_framework import exceptions
 from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
 from rest_framework.response import Response
-from account.models import User,UserProfile
+from account.models import Profile
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = UserProfile
+        model = Profile
         fields = ('phone','address','city','state','country','pincode')
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    profile = UserProfileSerializer(required=True)
+class AuthorSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(required=True)
     full_name = serializers.SerializerMethodField()
-    
 
     def get_full_name(self,obj):
         try:
@@ -33,7 +34,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         user = User(**validated_data)
         user.set_password(password)
         user.save()
-        UserProfile.objects.create(user=user, **profile_data)
+        Profile.objects.create(user=user, **profile_data)
         return user
     
     
@@ -52,4 +53,27 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile.save()
 
         return instance
-    
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        username = data.get("username", "")
+        password = data.get("password", "")
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    data["user"] = user
+                else:
+                    msg = "User is deactivated."
+                    raise exceptions.ValidationError(msg)
+            else:
+                msg = "Unable to login with given credentials."
+                raise exceptions.ValidationError(msg)
+        else:
+            msg = "Must provide username and password both."
+            raise exceptions.ValidationError(msg)
+        return data

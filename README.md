@@ -90,3 +90,9 @@ python manage.py collectstatic
 python manage.py createsuperuser
 python manage.py runserver
 ```
+
+- Admin data seeding
+
+```sh
+python manage.py loaddata account/fixtures/user.json
+```

@@ -1,10 +1,35 @@
 [
 	{
-		"model": "account.User",
+		"model": "account.Author",
 		"pk": 1,
 		"fields": {
-			"first_names": "John",
-			"last_names": "Johnson"
+			"first_name": "John",
+			"last_name": "Johnson",
+			"username": "john",
+			"email": "john@gmail.com"
+		}
+	},
+	{
+		"model": "account.Author",
+		"pk": 1,
+		"fields": {
+			"first_name": "Andy",
+			"last_name": "Smith",
+			"username": "Andy",
+			"email": "andy@gmail.com"
+		}
+	},
+	{
+		"model": "account.Profile",
+		"pk": 1,
+		"fields": {
+			"user": 1,
+			"phone": "9876543210",
+			"address": "37 Baker street",
+			"city": "Bangalore",
+			"state": "Karnataka",
+			"country": "India",
+			"pincode": "560024"
 		}
 	}
 ]

@@ -2,13 +2,19 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE','contentmanagementsystem.settings')
 import random
 import datetime
-from django.contrib.auth import get_user_model
 # from account.models import UserProfile
 from django.core.management import BaseCommand
+from account.models import *
 
-User = get_user_model()
+
+""" Clear all data and creates addresses """
+MODE_REFRESH = 'refresh'
+
+""" Clear all data and do not create any object """
+MODE_CLEAR = 'clear'
 
 class Command(BaseCommand):
+    help = "seed database to admin for testing and development."
 
     first_names = ('John','Andy','Joe')
     last_names = ('Johnson','Smith','Williams')
@@ -35,11 +41,9 @@ class Command(BaseCommand):
         user = User.objects.get(username='admin')
         for count in range(1,251):
             data = {
-                'user' : user,
-                'start_time' : datetime.datetime.now(),
-                'end_time' : datetime.datetime.now() + datetime.timedelta(days=1)
+                'user' : user
             }
-            UserProfile.objects.create(**data)
+            Profile.objects.create(**data)
             if count % 10 == 0:
                 user = self.create_random_user(count)
         print('Creation of dummy data is completed')
